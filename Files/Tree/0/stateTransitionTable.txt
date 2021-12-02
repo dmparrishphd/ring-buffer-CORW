@@ -1,0 +1,59 @@
+STATUS: IN PROGRESS
+
+A STATE-TRANSITION TABLE
+
+
+ I  CURRENT STATES              NEXT STATES
+--- -----------------------     -----------------------------
+ I   S   V   D   H   T  [H+1]    S   V   D     H        T     [H+1]
+--- --- --- --- --- --- -----   --- --- --- -------- -------- -----
+ 1   2   0   *   Ho  To   X       2  0   *   1 + Ho   0 + To    U
+ 1   2   0   *   Ho  To   X       1  0   1   1 + Ho   0 + To    U
+ 1   1   0   1   Ho  To   X       0  0   0   1 + Ho   0 + To    U
+ 1   0   0   0   Ho  To   X      -1  1   0   1 + Ho   1 + To    U
+ 1  -1   1   0   Ho  To   X      -1  1   0   1 + Ho   1 + To    U
+ 0
+
+INITIAL STATE: 2
+
+SCOPE OF SYMBOLS IS WITHIN ROW. E.G., THE X IN THE FIRST ROW IS NOT
+NECESSARILY EQUAL TO THE X IN THE SECOND ROW.
+
+U: THE VALUE "UNDER" THE TOP OF STACK
+X: AN ARBITRARY VALUE
+I: 1: "PUSH" J
+D: DIFFERENCE; SEE BELOW FOR DETAILS
+*: MORE THAN ONE
+S: STATE INDEX: MAPS TO VALID COMBINATIONS OF CONSTITUENT STATES
+V: OVERWRITE: THE PREVIOUS OPERATION OVERWROTE THE
+Z: MORE THAN ONE
+I: INPUT
+H: HEAD, MODULO INDEX
+H: TAIL, MODULO INDEX
+
+D, DIFFERENCE
+
+ D  CONDITION+
+--- ----------
+ 0  H + 0 == T
+ 1  H + 1 == T
+ *  OTHERWISE
+
+
+    EQUAL ( -- f -- )
+DUP NOT IF DROP
+    NEAR 2* ( -- 2f -- )
+DUP NOT IF DROP
+    0
+
+( -- a i -- )
+1- 2DUP IF ] 
+
+
+
+
+
+DUP NOT IF DROP EBB
+    
+EQUAL ELSE NEAR 2* ELSE 0
+
